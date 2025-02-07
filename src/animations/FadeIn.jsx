@@ -1,67 +1,74 @@
-import React from 'react'
-import {motion} from 'framer-motion'
- 
+import { delay } from 'motion'
+import { del } from 'motion/react-client'
+import { motion } from 'framer-motion'
+import React, { Children } from 'react'
 
-// Animation variants for the container
-const containerVariants = {
-    hidden: { opacity: 0, y: 40 },
+const containerVariant = {
+    hidden: {opacity: 0, y: 40},
     show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        when: "beforeChildren"
-      }
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+            when: "beforeChildren"
+        }
     }
-  }
-  
-  // Export variants for use in other components
-  export const variants = {
+}
+
+export const variants = {
     image: {
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.5,
-          delay: 0.5
+        hidden: {opacity: 0, y: 20},
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                delay: 0.5
+            }
         }
-      }
     },
-    
+
     title: {
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.5,
-          delay: 1.5
+        hidden: {opacity: 0, y: 20},
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                delay: 1.5
+            }
         }
-      }
     },
-    
-    button: {
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.5,
-          delay: 2.0
+
+    tagline: {
+        hidden: {opacity: 0, y:20},
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                delay: 2.0
+            }
         }
-      }
+    },
+
+    button: {
+        hidden: {opacity: 0, y: 20},
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                delay: 3.0
+            }
+        }
     }
-  }
-  
-  export default function FadeIn({ children }) {
-    return (
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
+}
+
+export default function FadeIn({children}) {
+  return (
+    <motion.div variants={containerVariant} initial="hidden" animate="show">
         {children}
-      </motion.div>
-    )
-  }
+    </motion.div>
+  )
+}
