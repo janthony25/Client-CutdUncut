@@ -15,25 +15,27 @@ export default function Services() {
 
 
   return (
-    <div className='bg-black h-150'>
-        <div className='grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4'>
-           {services.map((service, index) => (
-              <div key={index}  className='relative overflow-hidden mt-10 '>
-                <div className='hover:gray-50 overflow-hidden  transition-transform duration-300 hover:scale-110 '>
-                  <img src={service.image}
-                       alt={service.title}
-                       className='w-full h-full object-cover '
-                  />
-                     <div className='absolute inset-0  flex items-end justify-center py-4'>
-                      <h3 className='text-white text-2xl title font-semibold'>{service.title}</h3>
-                  </div>
-                 
-                </div>
-               
-              </div>
-              
-           ))}
-        </div>
-  </div>
+    <div className='h-screen bg-black'>
+      <div className='grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 '>
+        {services.map((service, index) => (
+          <div key={index} className='relative group '>
+            <div className='relative w-full h-full overflow-hidden'>
+              <img 
+                src={service.image}
+                alt={service.title}
+                className='w-full h-auto object-cover transition-transform duration-400 group-hover:scale-110'
+              />
+              {/* Overlay that appears on hover */}
+              <div className='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+            </div>
+            <div className='absolute bottom-2 left-1/2 -translate-x-1/2 z-10'>
+              <h3 className='text-white title text-2xl font-semibold transition-transform duration-300 group-hover:scale-110'>
+                {service.title}
+              </h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
