@@ -1,7 +1,7 @@
 import { delay } from 'motion'
 import { del } from 'motion/react-client'
 import { motion } from 'framer-motion'
-import React, { Children } from 'react'
+import React, { children } from 'react'
 
 const containerVariant = {
     hidden: {opacity: 0, y: 40},
@@ -59,7 +59,7 @@ export const variants = {
             y: 0,
             transition: {
                 duration: 0.5,
-                delay: 3.0
+                delay: 2.5
             }
         }
     }
