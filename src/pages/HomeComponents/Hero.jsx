@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import bgPhoto from "../../images/cropped-hd-girl.PNG"
+import bgPhoto from "../../images/compressed/cropped-hd-girl-min.PNG"
 import FadeIn, { variants } from '../../animations/FadeIn';
 import { div } from "motion/react-client";
 
@@ -37,10 +37,10 @@ export default function Hero() {
                         <button 
                         className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
                         transition-all duration-300 text-lg tracking-wider uppercase">
-                            Book an Appointment</button>
+                            Book Appointment</button>
                         <button className="px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
                         transition-all duration-300 text-lg tracking-wider uppercase">
-                            View Services
+                            Learn More
                         </button>
                     </motion.div>
                 </div>
