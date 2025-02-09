@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Menu, OctagonPauseIcon, X } from 'lucide-react'
 import { Link, useLocation} from 'react-router-dom'
 import { motion } from 'motion/react';
@@ -20,7 +20,18 @@ const headerVariants = {
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const [hasScrolled, setHasScrolled] = useState(false);
     const location = useLocation();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            setHasScrolled(scrollPosition > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const menuItems = [
         { title: 'Home', href: '/'},
@@ -30,7 +41,8 @@ export default function Header() {
 
     return (
         <motion.header 
-            className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50"
+            className={`fixed top-0 left-0 w-full transition-all duration-500 z-50 
+                ${hasScrolled ? 'bg-black/80 backdrop-blur-sm' : 'md:bg-transparent md:backdrop-blur-none bg-black/80 backdrop-blur-sm'}`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 3.5 }}
