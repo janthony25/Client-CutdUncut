@@ -16,24 +16,32 @@ export default function Hero() {
                 alt="absolute colored-haired-girl" 
                 className="w-auto h-screen lg:scale-100 object-cover" 
               />
-              {/* Gradient Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-black"></div>
+              {/* Slightly lighter gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+              {/* Reduced opacity for the additional overlay */}
+              <div className="absolute inset-0 bg-black/20"></div>
             </motion.div>
             
-            {/* Content Container */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center space-y-8 z-10">
-              {/* Title  */}
+            {/* Content Container with higher z-index */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center space-y-8 z-20">
+              {/* Title with text shadow */}
               <motion.h1 
                 variants={variants.title} 
-                className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl title tracking-wide"
+                className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl title tracking-wide drop-shadow-2xl"
+                style={{
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                }}
               >
                 Cut d Uncut
               </motion.h1>
   
-              {/* Tagline */}
+              {/* Tagline with text shadow */}
               <motion.p 
                 variants={variants.tagline} 
-                className="text-white text-xl md:text-2xl lg:text-3xl tracking-widest uppercase font-light"
+                className="text-white text-xl md:text-2xl lg:text-3xl tracking-widest uppercase font-light drop-shadow-lg"
+                style={{
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                }}
               >
                 Unlock your best look
               </motion.p>
@@ -45,13 +53,13 @@ export default function Hero() {
               >
                 <button 
                   className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
-                  transition-all duration-300 text-lg tracking-wider uppercase"
+                  transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
                 >
                   Book Appointment
                 </button>
                 <button 
                   className="px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
-                  transition-all duration-300 text-lg tracking-wider uppercase"
+                  transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
                 >
                   Learn More
                 </button>
