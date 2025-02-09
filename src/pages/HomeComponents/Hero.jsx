@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import bgPhoto from "../../images/compressed/cropped-hd-girl-min.PNG"
+import bgPhoto from "../../images/compressed/curly-haired-blond-noBg2.png"
 import FadeIn, { variants } from '../../animations/FadeIn';
 import { div } from "motion/react-client";
 
