@@ -9,12 +9,36 @@ import { motion, useInView } from 'framer-motion';
 
 const CircularCarousel = () => {
   const images = [
-    { src: coloring, title: 'Hair Coloring' },
-    { src: haircuts, title: 'Hair Styling' },
-    { src: man, title: `Men's Haircut` },
-    { src: styling2, title: `Women's Haircuts` },
-    { src: kid, title: 'Kids Haircuts' },
-    { src: treatment, title: 'Haircuts' }
+    { 
+      src: coloring, 
+      title: 'Hair Coloring',
+      details: 'Professional coloring services including highlights, balayage, and full color transformations'
+    },
+    { 
+      src: haircuts, 
+      title: 'Hair Styling',
+      details: 'Expert styling for any occasion - from everyday looks to special events'
+    },
+    { 
+      src: man, 
+      title: `Men's Haircut`,
+      details: 'Classic and modern cuts tailored to your style and preferences'
+    },
+    { 
+      src: styling2, 
+      title: `Women's Haircuts`,
+      details: 'Precision cuts and styles to enhance your natural beauty'
+    },
+    { 
+      src: kid, 
+      title: 'Kids Haircuts',
+      details: 'Gentle and fun haircuts in a kid-friendly environment'
+    },
+    { 
+      src: treatment, 
+      title: 'Hair Treatment',
+      details: 'Revitalizing treatments for healthy, beautiful hair'
+    }
   ];
 
   const ref = useRef(null);
@@ -125,9 +149,18 @@ const CircularCarousel = () => {
                     className="w-full h-full object-cover object-center transform scale-105"
                   />
                 </div>
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xl">
-                  {image.title}
+                {/* Permanent dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                {/* Title (always visible) */}
+                <div className="absolute bottom-6 left-0 w-full text-center">
+                  <h3 className="text-white text-xl font-semibold px-4">{image.title}</h3>
+                </div>
+                {/* Hover overlay with details */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-xl">
+                  <div className="px-6 text-center">
+                    <h3 className="text-white text-xl font-semibold mb-2">{image.title}</h3>
+                    <p className="text-white/90 text-sm">{image.details}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -180,9 +213,18 @@ const CircularCarousel = () => {
                       draggable="false"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {image.title}
+                  {/* Permanent dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  {/* Title (always visible) */}
+                  <div className="absolute bottom-6 left-0 w-full text-center">
+                    <h3 className="text-white text-xl font-semibold px-4">{image.title}</h3>
+                  </div>
+                  {/* Hover overlay with details */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="px-6 text-center">
+                      {/* <h3 className="text-white text-xl font-semibold mb-2">{image.title}</h3> */}
+                      <p className="text-white/90 text-sm">{image.details}</p>
+                    </div>
                   </div>
                 </div>
               </div>
