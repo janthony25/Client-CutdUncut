@@ -1,74 +1,145 @@
-import React from 'react'
-import haircuts from "../../images/compressed/haircuts.jpg"
-import hairStyling from "../../images/compressed/styling2.jpg"
-import hairTreatment from "../../images/compressed/treatment.jpg"
-import hairColoring from "../../images/compressed/coloring.jpg"
-import { useInView } from 'motion/react'
-import { motion } from 'framer-motion'
+import React, { useState, useRef, useEffect } from 'react';
+import coloring from '../../images/compressed/coloring.jpg';
+import haircuts from '../../images//compressed/haircuts.jpg';
+import treatment from '../../images//compressed/treatment.jpg';
+import styling2 from '../../images/compressed/styling2.jpg';
+import kid from '../../images/compressed/kid-min.jpg';
+import man from '../../images/compressed/man-min.jpg';
+import { motion } from 'framer-motion';
 
-const services = [
-  { title: "Haircuts", image: haircuts },
-  { title: "Hair Styling", image: hairStyling },
-  { title: "Hair Treatment", image: hairTreatment },
-  { title: "Hair Coloring", image: hairColoring },
-]
+const CircularCarousel = () => {
+  const images = [
+    { src: coloring, title: 'Hair Coloring' },
+    { src: haircuts, title: 'Haircuts' },
+    { src: man, title: 'Hair Treatment' },
+    { src: styling2, title: 'Hair Styling' },
+    { src: kid, title: 'Kids Haircuts' },
+    { src: treatment, title: 'Haircuts' }
+  ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.6,
-    },
-  },
-}
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(2);
+  const [isPaused, setIsPaused] = useState(false);
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 1 },
-  },
-}
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-export default function Services() {
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px",
-  })
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % images.length);
+      }, 6000);
+
+      return () => clearInterval(interval);
+    }
+  }, [images.length, isPaused]);
+
+  const calculatePosition = (index) => {
+    const maxVisibleCards = 5;
+    const totalItems = images.length;
+    const offset = (((index - activeIndex) % totalItems) + totalItems) % totalItems;
+    let adjustedOffset = offset;
+    
+    if (offset > Math.floor(maxVisibleCards / 2)) {
+      adjustedOffset = offset - totalItems;
+    }
+    
+    if (Math.abs(adjustedOffset) > Math.floor(maxVisibleCards / 2)) {
+      return {
+        transform: 'translateX(0px) scale(0)',
+        zIndex: -1,
+        opacity: 0,
+        visibility: 'hidden'
+      };
+    }
+
+    const baseTransform = adjustedOffset * 220;
+    const scale = 1 - Math.abs(adjustedOffset) * 0.2;
+    const zIndex = 100 - Math.abs(adjustedOffset * 10);
+    
+    // Check if this is the center card
+    const isCenter = adjustedOffset === 0;
+    
+    return {
+      transform: `translateX(${baseTransform}px) scale(${scale})`,
+      zIndex,
+      opacity: Math.max(0.5, 1 - Math.abs(adjustedOffset) * 0.3),
+      visibility: 'visible',
+      transition: 'all 1s ease-in-out',
+      cursor: isCenter ? 'pointer' : 'default'
+    };
+  };
+
+  if (isMobile) {
+    return (
+      <div className="w-full bg-black py-8">
+        <h1 className="text-white text-center mb-8 font-serif text-4xl">Our Services</h1>
+        <div className="grid grid-cols-1 gap-4 px-4">
+          {images.map((image, index) => (
+            <div key={index} className="w-full aspect-[7/10]">
+              <div className="relative group w-full h-full">
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-full object-cover rounded-xl shadow-xl"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xl">
+                  {image.title}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-black">
-      <h1 className="text-white text-center mb-10 font-serif text-4xl pt-10">Our Services</h1>
-      <motion.div
-        ref={ref}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        className="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center"
-      >
-        {services.map((service, index) => (
-          <motion.div key={index} variants={itemVariants} className="relative group">
-            <div className="relative w-full h-75 overflow-hidden">
-              <img
-                src={service.image || "/placeholder.svg"}
-                alt={service.title}
-                className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
-                loading={index < 2 ? "eager" : "lazy"}
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
-              <h3 className="text-white title text-2xl font-semibold transition-transform duration-300 group-hover:scale-110">
-                {service.title}
-              </h3>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+    <div className="w-full h-screen bg-black flex flex-col justify-center items-center">
+      <h1 className="text-white text-center mb-8 font-serif text-5xl">Our Services</h1>
+      
+      <div className="relative w-full h-[500px] overflow-visible">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[400px]">
+          {images.map((image, index) => {
+            const position = calculatePosition(index);
+            const isCenter = position.transform.includes('translateX(0px)');
+            
+            return (
+              <div
+                key={index}
+                className="absolute left-0 top-0 select-none"
+                style={{
+                  ...position,
+                  width: '280px',
+                  height: '400px',
+                }}
+                onMouseEnter={() => isCenter && setIsPaused(true)}
+                onMouseLeave={() => isCenter && setIsPaused(false)}
+              >
+                <div className="relative group w-full h-full">
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover rounded-xl shadow-xl"
+                    draggable="false"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
+
+export default CircularCarousel;
