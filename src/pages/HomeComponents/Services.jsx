@@ -10,9 +10,9 @@ import { motion, useInView } from 'framer-motion';
 const CircularCarousel = () => {
   const images = [
     { src: coloring, title: 'Hair Coloring' },
-    { src: haircuts, title: 'Haircuts' },
-    { src: man, title: 'Hair Treatment' },
-    { src: styling2, title: 'Hair Styling' },
+    { src: haircuts, title: 'Hair Styling' },
+    { src: man, title: `Men's Haircut` },
+    { src: styling2, title: `Women's Haircuts` },
     { src: kid, title: 'Kids Haircuts' },
     { src: treatment, title: 'Haircuts' }
   ];
@@ -40,7 +40,7 @@ const CircularCarousel = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.7, delay: 0.95 }
+      transition: { duration: 0.59, delay: 0.78 }
     }
   };
 
@@ -85,7 +85,7 @@ const CircularCarousel = () => {
 
     const baseTransform = adjustedOffset * 220;
     const scale = 1 - Math.abs(adjustedOffset) * 0.2;
-    const zIndex = 100 - Math.abs(adjustedOffset * 10);
+    const zIndex = 100 - Math.abs(adjustedOffset) * 10;
     const isCenter = adjustedOffset === 0;
     
     return {
@@ -116,13 +116,15 @@ const CircularCarousel = () => {
           className="grid grid-cols-1 gap-4 px-4"
         >
           {images.map((image, index) => (
-            <div key={index} className="w-full aspect-[7/10]">
+            <div key={index} className="w-full aspect-[7/10] overflow-hidden">
               <div className="relative group w-full h-full">
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  className="w-full h-full object-cover rounded-xl shadow-xl"
-                />
+                <div className="w-full h-full overflow-hidden rounded-xl">
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover object-center transform scale-105"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xl">
                   {image.title}
@@ -169,14 +171,19 @@ const CircularCarousel = () => {
                 onMouseEnter={() => isCenter && setIsPaused(true)}
                 onMouseLeave={() => isCenter && setIsPaused(false)}
               >
-                <div className="relative group w-full h-full">
-                  <img
-                    src={image.src}
-                    alt={image.title}
-                    className="w-full h-full object-cover rounded-xl shadow-xl"
-                    draggable="false"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                <div className="relative group w-full h-full overflow-hidden rounded-xl">
+                  <div className="w-full h-full overflow-hidden">
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full h-full object-cover object-center transform scale-105"
+                      draggable="false"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {image.title}
+                  </div>
                 </div>
               </div>
             );
