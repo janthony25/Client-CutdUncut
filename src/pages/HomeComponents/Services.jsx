@@ -5,7 +5,7 @@ import treatment from '../../images//compressed/treatment.jpg';
 import styling2 from '../../images/compressed/styling2.jpg';
 import kid from '../../images/compressed/kid-min.jpg';
 import man from '../../images/compressed/man-min.jpg';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 const CircularCarousel = () => {
   const images = [
@@ -17,9 +17,32 @@ const CircularCarousel = () => {
     { src: treatment, title: 'Haircuts' }
   ];
 
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: "-100px"
+  });
+
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(2);
   const [isPaused, setIsPaused] = useState(false);
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.7, delay: 0.95 }
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -63,8 +86,6 @@ const CircularCarousel = () => {
     const baseTransform = adjustedOffset * 220;
     const scale = 1 - Math.abs(adjustedOffset) * 0.2;
     const zIndex = 100 - Math.abs(adjustedOffset * 10);
-    
-    // Check if this is the center card
     const isCenter = adjustedOffset === 0;
     
     return {
@@ -79,9 +100,21 @@ const CircularCarousel = () => {
 
   if (isMobile) {
     return (
-      <div className="w-full bg-black py-8">
-        <h1 className="text-white text-center mb-8 font-serif text-4xl">Our Services</h1>
-        <div className="grid grid-cols-1 gap-4 px-4">
+      <div className="w-full bg-black py-8" ref={ref}>
+        <motion.h1 
+          variants={titleVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="text-white text-center mb-8 font-serif text-4xl"
+        >
+          Our Services
+        </motion.h1>
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid grid-cols-1 gap-4 px-4"
+        >
           {images.map((image, index) => (
             <div key={index} className="w-full aspect-[7/10]">
               <div className="relative group w-full h-full">
@@ -97,16 +130,28 @@ const CircularCarousel = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-screen bg-black flex flex-col justify-center items-center">
-      <h1 className="text-white text-center mb-8 font-serif text-5xl">Our Services</h1>
+    <div className="w-full h-screen bg-black flex flex-col justify-center items-center" ref={ref}>
+      <motion.h1 
+        variants={titleVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="text-white text-center mb-8 font-serif text-5xl"
+      >
+        Our Services
+      </motion.h1>
       
-      <div className="relative w-full h-[500px] overflow-visible">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="relative w-full h-[500px] overflow-visible"
+      >
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[400px]">
           {images.map((image, index) => {
             const position = calculatePosition(index);
@@ -137,7 +182,7 @@ const CircularCarousel = () => {
             );
           })}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
