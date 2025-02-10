@@ -50,6 +50,7 @@ const CircularCarousel = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(2);
   const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const titleVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -79,14 +80,46 @@ const CircularCarousel = () => {
   }, []);
 
   useEffect(() => {
-    if (!isPaused) {
+    if (!isPaused && !isTransitioning) {
       const interval = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % images.length);
       }, 6000);
 
       return () => clearInterval(interval);
     }
-  }, [images.length, isPaused]);
+  }, [images.length, isPaused, isTransitioning]);
+
+  const handleCardClick = (clickedIndex) => {
+    if (clickedIndex === activeIndex || isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setIsPaused(true);
+
+    // Calculate the shortest path to the target index
+    const totalItems = images.length;
+    let diff = (clickedIndex - activeIndex + totalItems) % totalItems;
+    if (diff > totalItems / 2) {
+      diff = diff - totalItems;
+    }
+
+    // Animate through intermediate positions
+    const animate = (step) => {
+      if (step === 0) {
+        setIsTransitioning(false);
+        setIsPaused(false);
+        return;
+      }
+
+      const direction = diff > 0 ? 1 : -1;
+      setActiveIndex(prev => (prev + direction + totalItems) % totalItems);
+
+      setTimeout(() => {
+        animate(step - direction);
+      }, 200); // Adjust timing to match transition duration
+    };
+
+    animate(diff);
+  };
 
   const calculatePosition = (index) => {
     const maxVisibleCards = 5;
@@ -118,7 +151,7 @@ const CircularCarousel = () => {
       opacity: Math.max(0.5, 1 - Math.abs(adjustedOffset) * 0.3),
       visibility: 'visible',
       transition: 'all 1s ease-in-out',
-      cursor: isCenter ? 'pointer' : 'default'
+      cursor: isCenter ? 'default' : 'pointer'
     };
   };
 
@@ -149,16 +182,12 @@ const CircularCarousel = () => {
                     className="w-full h-full object-cover object-center transform scale-105"
                   />
                 </div>
-                {/* Permanent dark overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                {/* Title (always visible) */}
                 <div className="absolute bottom-6 left-0 w-full text-center">
                   <h3 className="text-white text-xl font-semibold px-4">{image.title}</h3>
                 </div>
-                {/* Hover overlay with details */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-xl">
                   <div className="px-6 text-center">
-                    <h3 className="text-white text-xl font-semibold mb-2">{image.title}</h3>
                     <p className="text-white/90 text-sm">{image.details}</p>
                   </div>
                 </div>
@@ -201,6 +230,7 @@ const CircularCarousel = () => {
                   width: '280px',
                   height: '400px',
                 }}
+                onClick={() => !isCenter && handleCardClick(index)}
                 onMouseEnter={() => isCenter && setIsPaused(true)}
                 onMouseLeave={() => isCenter && setIsPaused(false)}
               >
@@ -213,16 +243,12 @@ const CircularCarousel = () => {
                       draggable="false"
                     />
                   </div>
-                  {/* Permanent dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  {/* Title (always visible) */}
                   <div className="absolute bottom-6 left-0 w-full text-center">
                     <h3 className="text-white text-xl font-semibold px-4">{image.title}</h3>
                   </div>
-                  {/* Hover overlay with details */}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <div className="px-6 text-center">
-                      {/* <h3 className="text-white text-xl font-semibold mb-2">{image.title}</h3> */}
                       <p className="text-white/90 text-sm">{image.details}</p>
                     </div>
                   </div>
