@@ -4,9 +4,6 @@ import bgPhoto from "../../images/compressed/hero-bg.PNG"
 import FadeIn, { variants } from '../../animations/FadeIn';
 import { div } from "motion/react-client";
 
-// Preload the hero image before React even mounts
-const preloadImage = new Image();
-preloadImage.src = bgPhoto;
 
 export default function Hero() {
     return (
@@ -72,4 +69,4 @@ export default function Hero() {
         </div>
       </div>
     )
-}
+  }
