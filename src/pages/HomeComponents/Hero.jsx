@@ -8,20 +8,21 @@ export default function Hero() {
       <div className="relative bg-black min-h-screen w-full flex justify-center items-center overflow-hidden">
         <div className="relative w-full h-screen flex items-center justify-center">
           <FadeIn>
-            <motion.div variants={variants.image} className="relative w-full h-full">
+            <motion.div variants={variants.image} className="relative w-full h-screen">
               <img 
                 src={bgPhoto} 
                 alt="absolute colored-haired-girl" 
-                className="w-full h-full object-cover" 
-                loading="lazy" 
+                className="w-auto h-screen lg:w-full object-cover" 
+                loading="lazy"
               />
-              {/* Combined gradient and overlay for optimization */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent bg-black/20"></div>
+              {/* Restored the exact gradient and overlay effects */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+              <div className="absolute inset-0 bg-black/20"></div>
             </motion.div>
             
-            {/* Content Container */}
+            {/* Content Container with same positioning */}
             <div className="absolute inset-0 flex flex-col items-center justify-center space-y-8 z-20">
-              {/* Title */}
+              {/* Title with exact text shadow */}
               <motion.h1 
                 variants={variants.title} 
                 className="text-white title text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-wide drop-shadow-2xl"
@@ -30,7 +31,7 @@ export default function Hero() {
                 Cut d Uncut
               </motion.h1>
   
-              {/* Tagline */}
+              {/* Tagline with exact text shadow */}
               <motion.p 
                 variants={variants.tagline} 
                 className="text-white text-xl md:text-2xl lg:text-3xl tracking-widest uppercase font-light drop-shadow-lg"
@@ -39,19 +40,19 @@ export default function Hero() {
                 Unlock your best look
               </motion.p>
   
-              {/* Buttons */}
+              {/* Buttons remain identical */}
               <motion.div 
                 variants={variants.button} 
                 className="flex flex-col md:flex-row gap-4 mt-8"
               >
                 <button 
-                  className="px-6 md:px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+                  className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
                   transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
                 >
                   Book Appointment
                 </button>
                 <button 
-                  className="px-6 md:px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
+                  className="px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
                   transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
                 >
                   Learn More
