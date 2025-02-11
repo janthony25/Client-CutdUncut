@@ -1,46 +1,30 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from "framer-motion";
-import bgPhoto from "../../images/compressed/hero-bg.PNG"
+import React from 'react'
+import { motion } from "framer-motion";
+import bgPhoto from "../../images/compressed/hero-bg-min.PNG"
 import FadeIn, { variants } from '../../animations/FadeIn';
+import { div } from "motion/react-client";
+
 
 export default function Hero() {
-    const [imageLoaded, setImageLoaded] = useState(false);
-
     return (
       <div className="relative bg-black min-h-screen w-full flex justify-center items-center overflow-hidden">
-        {/* Loading Screen */}
-        <AnimatePresence>
-            {!imageLoaded && (
-                <motion.div
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 bg-black z-50 flex items-center justify-center"
-                >
-                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-
         <div className="relative w-full h-screen flex items-center justify-center">
           <FadeIn>
-            <motion.div 
-                variants={variants.image} 
-                className="relative"
-                onViewportEnter={() => setImageLoaded(true)}
-            >
+            <motion.div variants={variants.image} className="relative">
               <img 
                 src={bgPhoto} 
                 alt="absolute colored-haired-girl" 
-                className="w-auto h-screen lg:scale-100 object-cover"
-                onLoad={() => setImageLoaded(true)}
+                className="w-auto h-screen lg:scale-100 object-cover" 
               />
+              {/* Slightly lighter gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+              {/* Reduced opacity for the additional overlay */}
               <div className="absolute inset-0 bg-black/20"></div>
             </motion.div>
             
-            {/* Content Container */}
+            {/* Content Container with higher z-index */}
             <div className="absolute inset-0 flex flex-col items-center justify-center space-y-8 z-20">
+              {/* Title with text shadow */}
               <motion.h1 
                 variants={variants.title} 
                 className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl title tracking-wide drop-shadow-2xl"
@@ -51,6 +35,7 @@ export default function Hero() {
                 Cut d Uncut
               </motion.h1>
   
+              {/* Tagline with text shadow */}
               <motion.p 
                 variants={variants.tagline} 
                 className="text-white text-xl md:text-2xl lg:text-3xl tracking-widest uppercase font-light drop-shadow-lg"
@@ -61,6 +46,7 @@ export default function Hero() {
                 Unlock your best look
               </motion.p>
   
+              {/* Buttons */}
               <motion.div 
                 variants={variants.button} 
                 className="flex flex-col md:flex-row gap-4 mt-8"
@@ -83,4 +69,4 @@ export default function Hero() {
         </div>
       </div>
     )
-}
+  }
