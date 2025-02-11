@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import bgPhoto from "../../images/compressed/hero-bg-min.PNG"
+// import bgPhoto from "../../images/compressed/hero-bg-min.PNG"
+import bgPhoto from "../../images/webp/hero-bg.webp"
 import FadeIn, { variants } from '../../animations/FadeIn';
 import { div } from "motion/react-client";
 
