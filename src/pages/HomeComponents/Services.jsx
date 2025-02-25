@@ -69,6 +69,16 @@ const CircularCarousel = () => {
     }
   };
 
+  // Button animation variant
+  const buttonVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 1.5 }
+    }
+  };
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -195,6 +205,22 @@ const CircularCarousel = () => {
             </div>
           ))}
         </motion.div>
+        
+        {/* Book Appointment Button for mobile */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="flex justify-center mt-10 mb-8"
+        >
+          <motion.button
+            variants={buttonVariant}
+            className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+            transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+          >
+            Book Appointment
+          </motion.button>
+        </motion.div>
       </div>
     );
   }
@@ -257,6 +283,22 @@ const CircularCarousel = () => {
             );
           })}
         </div>
+      </motion.div>
+      
+      {/* Book Appointment Button for desktop */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="mt-5"
+      >
+        <motion.button
+          variants={buttonVariant}
+          className="px-20 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+          transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+        >
+          VIEW ALL
+        </motion.button>
       </motion.div>
     </div>
   );
