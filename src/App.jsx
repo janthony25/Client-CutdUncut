@@ -5,11 +5,13 @@ import Header from "./pages/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./pages/Footer";
 import ServicesPage from "./pages/ServicesPage";
+import ScrollToTop from "./pages/ScrollToTopComponent";
 
 function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div>
         <Header />
         <Routes>

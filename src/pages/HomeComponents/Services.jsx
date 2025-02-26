@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import coloring from '../../images/compressed/coloring.jpg';
 import haircuts from '../../images//compressed/haircuts.jpg';
 import treatment from '../../images//compressed/treatment.jpg';
@@ -208,17 +209,20 @@ const CircularCarousel = () => {
         
         {/* Book Appointment Button for mobile */}
         <motion.div
-          variants={buttonVariant}
+          variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="flex justify-center mt-10 mb-8"
         >
-          <button
-            className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
-            transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
-          >
-            Book Appointment
-          </button>
+          <Link to="/services">
+            <motion.button
+              variants={buttonVariant}
+              className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+              transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+            >
+              View All Services
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     );
@@ -284,19 +288,22 @@ const CircularCarousel = () => {
         </div>
       </motion.div>
       
-      {/* Book Appointment Button for desktop */}
+      {/* Book Appointment Button for desktop - now with Link */}
       <motion.div
-        variants={buttonVariant}
+        variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         className="mt-5"
       >
-        <button
-          className="px-20 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
-          transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
-        >
-          VIEW ALL
-        </button>
+        <Link to="/services">
+          <motion.button
+            variants={buttonVariant}
+            className="px-20 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+            transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+          >
+            VIEW ALL
+          </motion.button>
+        </Link>
       </motion.div>
     </div>
   );
