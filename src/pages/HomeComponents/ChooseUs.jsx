@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Star, Scissors, Sparkle, SparkleIcon } from 'lucide-react';
 
 export default function ChooseUs() {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = 4;
+  
+  // Reference for scroll detection
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, {
+    once: true,
+    margin: "-100px"
+  });
 
-  // Auto-change slides every 3 seconds
+  // Auto-change slides every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -14,6 +21,37 @@ export default function ChooseUs() {
     
     return () => clearInterval(interval);
   }, []);
+
+  // Animation variants
+  const titleVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        duration: 0.5, 
+        delay: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
 
   // Benefits section content with associated icons
   const benefits = [
@@ -86,15 +124,31 @@ export default function ChooseUs() {
   };
 
   return (
-    <div className="bg-black text-white py-20">
+    <div className="bg-black text-white py-20" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-serif text-center mb-16">Why choose us</h2>
+        <motion.h2 
+          variants={titleVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="text-4xl font-serif text-center mb-16"
+        >
+          Why choose us
+        </motion.h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        >
           {/* Left column - Benefits */}
           <div className="space-y-10">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start space-x-4">
+              <motion.div 
+                key={index} 
+                variants={itemVariants}
+                className="flex items-start space-x-4"
+              >
                 <div className="bg-gray-700 rounded-full p-2 mt-1 flex-shrink-0 flex items-center justify-center">
                   {benefit.icon}
                 </div>
@@ -102,12 +156,15 @@ export default function ChooseUs() {
                   <h3 className="text-xl font-medium mb-2">{benefit.title}</h3>
                   <p className="text-gray-300">{benefit.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
           
           {/* Right column - Reviews carousel */}
-          <div className="relative overflow-hidden">
+          <motion.div 
+            variants={itemVariants}
+            className="relative overflow-hidden"
+          >
             <motion.div
               key={currentPage}
               custom={1}
@@ -146,8 +203,8 @@ export default function ChooseUs() {
                 />
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
