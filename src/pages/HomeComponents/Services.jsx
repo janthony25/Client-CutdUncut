@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import coloring from '../../images/compressed/coloring.jpg';
 import haircuts from '../../images//compressed/haircuts.jpg';
 import treatment from '../../images//compressed/treatment.jpg';
@@ -66,6 +67,16 @@ const CircularCarousel = () => {
     visible: {
       opacity: 1,
       transition: { duration: 0.59, delay: 0.78 }
+    }
+  };
+
+  // Button animation variant
+  const buttonVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 1.5 }
     }
   };
 
@@ -195,6 +206,24 @@ const CircularCarousel = () => {
             </div>
           ))}
         </motion.div>
+        
+        {/* Book Appointment Button for mobile */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="flex justify-center mt-10 mb-8"
+        >
+          <Link to="/services">
+            <motion.button
+              variants={buttonVariant}
+              className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+              transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+            >
+              View All Services
+            </motion.button>
+          </Link>
+        </motion.div>
       </div>
     );
   }
@@ -257,6 +286,24 @@ const CircularCarousel = () => {
             );
           })}
         </div>
+      </motion.div>
+      
+      {/* Book Appointment Button for desktop - now with Link */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="mt-5"
+      >
+        <Link to="/services">
+          <motion.button
+            variants={buttonVariant}
+            className="px-20 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+            transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+          >
+            VIEW ALL
+          </motion.button>
+        </Link>
       </motion.div>
     </div>
   );
