@@ -52,7 +52,7 @@ export default function Header() {
                     {/* Logo */}
                     <div className="flex-shrink-0">
                         <Link to="/" className="text-white title text-xl font-medium">
-                            Cut d Uncut
+                            GUPIT
                         </Link>
                     </div>
 

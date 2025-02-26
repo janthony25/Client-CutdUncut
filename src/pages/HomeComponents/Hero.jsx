@@ -28,7 +28,7 @@ export default function Hero() {
                 className="text-white title text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-wide drop-shadow-2xl"
                 style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
               >
-                Cut d Uncut
+                GUPIT
               </motion.h1>
   
               {/* Tagline with exact text shadow */}
