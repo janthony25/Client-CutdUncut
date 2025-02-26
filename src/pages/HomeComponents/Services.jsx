@@ -208,18 +208,17 @@ const CircularCarousel = () => {
         
         {/* Book Appointment Button for mobile */}
         <motion.div
-          variants={containerVariants}
+          variants={buttonVariant}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="flex justify-center mt-10 mb-8"
         >
-          <motion.button
-            variants={buttonVariant}
+          <button
             className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
             transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
           >
             Book Appointment
-          </motion.button>
+          </button>
         </motion.div>
       </div>
     );
@@ -287,18 +286,17 @@ const CircularCarousel = () => {
       
       {/* Book Appointment Button for desktop */}
       <motion.div
-        variants={containerVariants}
+        variants={buttonVariant}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         className="mt-5"
       >
-        <motion.button
-          variants={buttonVariant}
+        <button
           className="px-20 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
           transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
         >
           VIEW ALL
-        </motion.button>
+        </button>
       </motion.div>
     </div>
   );
