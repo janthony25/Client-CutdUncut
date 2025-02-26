@@ -33,6 +33,13 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     const menuItems = [
         { title: 'Home', href: '/'},
         {title: 'Services', href: '/services'},
@@ -51,23 +58,51 @@ export default function Header() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link to="/" className="text-white title text-xl font-medium">
-                            GUPIT
-                        </Link>
+                        {location.pathname === '/' ? (
+                            <a 
+                                href="#" 
+                                className="text-white title text-xl font-medium"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    scrollToTop();
+                                }}
+                            >
+                                GUPIT
+                            </a>
+                        ) : (
+                            <Link to="/" className="text-white title text-xl font-medium">
+                                GUPIT
+                            </Link>
+                        )}
                     </div>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-8">
                             {menuItems.map((item) => (
-                                <Link
-                                    key={item.title}
-                                    to={item.href}
-                                    className={`text-white hover:text-blue-200 transition-colors duration-200 
-                                        ${location.pathname === item.href ? 'border-b-2 border-blue-200' : ''}`}
-                                >
-                                    {item.title}
-                                </Link>
+                                item.title === 'Home' && location.pathname === '/' ? (
+                                    <a
+                                        key={item.title}
+                                        href="#"
+                                        className={`text-white hover:text-blue-200 transition-colors duration-200 
+                                            ${location.pathname === item.href ? 'border-b-2 border-blue-200' : ''}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            scrollToTop();
+                                        }}
+                                    >
+                                        {item.title}
+                                    </a>
+                                ) : (
+                                    <Link
+                                        key={item.title}
+                                        to={item.href}
+                                        className={`text-white hover:text-blue-200 transition-colors duration-200 
+                                            ${location.pathname === item.href ? 'border-b-2 border-blue-200' : ''}`}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                )
                             ))}
                             <button className="px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200">
                                 Book now
@@ -91,15 +126,31 @@ export default function Header() {
                     <div className="md:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             {menuItems.map((item) => (
-                                <Link
-                                    key={item.title}
-                                    to={item.href}
-                                    className={`block text-white hover:text-blue-200 py-2 transition-colors duration-200
-                                        ${location.pathname === item.href ? 'border-l-4 border-blue-200 pl-2' : ''}`}
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {item.title}
-                                </Link>
+                                item.title === 'Home' && location.pathname === '/' ? (
+                                    <a
+                                        key={item.title}
+                                        href="#"
+                                        className={`block text-white hover:text-blue-200 py-2 transition-colors duration-200
+                                            ${location.pathname === item.href ? 'border-l-4 border-blue-200 pl-2' : ''}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            scrollToTop();
+                                            setIsOpen(false);
+                                        }}
+                                    >
+                                        {item.title}
+                                    </a>
+                                ) : (
+                                    <Link
+                                        key={item.title}
+                                        to={item.href}
+                                        className={`block text-white hover:text-blue-200 py-2 transition-colors duration-200
+                                            ${location.pathname === item.href ? 'border-l-4 border-blue-200 pl-2' : ''}`}
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                )
                             ))}
                             <button className="w-full mt-4 px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200">
                                 Book now
