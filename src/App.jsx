@@ -3,6 +3,7 @@ import { Children } from "react";
 import HomePage from "./pages/HomePage";
 import Header from "./pages/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Footer from "./pages/Footer";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           
         </Routes>
       </div>
+      <Footer />
     </Router>
   )
 }
