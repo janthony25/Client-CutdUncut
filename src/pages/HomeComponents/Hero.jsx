@@ -6,7 +6,6 @@ import FadeIn, { variants } from '../../animations/FadeIn';
 export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   
   // Preload image with complete loading guarantee
   useEffect(() => {
@@ -14,14 +13,6 @@ export default function Hero() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', bgPhoto, true);
     xhr.responseType = 'blob';
-    
-    // Track loading progress
-    xhr.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const progress = Math.round((event.loaded / event.total) * 100);
-        setLoadingProgress(progress);
-      }
-    };
     
     // When fully loaded
     xhr.onload = () => {
@@ -34,8 +25,6 @@ export default function Hero() {
         img.src = localUrl;
         
         img.onload = () => {
-          setLoadingProgress(100);
-          
           // Short delay before showing content to ensure smooth transition
           setTimeout(() => {
             setImageLoaded(true);
@@ -74,7 +63,7 @@ export default function Hero() {
 
   return (
     <div className="relative bg-black min-h-screen w-full flex justify-center items-center overflow-hidden">
-      {/* Loading Screen */}
+      {/* Loading Screen with Spinning Loader */}
       <AnimatePresence>
         {!showContent && (
           <motion.div 
@@ -84,35 +73,16 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
           >
             <div className="text-white flex flex-col items-center">
-              {/* Circular progress indicator */}
-              <div className="relative w-20 h-20 mb-4">
-                <motion.div 
-                  className="w-20 h-20 border-4 border-white/30 rounded-full absolute"
-                />
-                <svg className="absolute inset-0 w-20 h-20" viewBox="0 0 100 100">
-                  <motion.circle
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: loadingProgress / 100 }}
-                    transition={{ type: "tween", duration: 0.3 }}
-                    className="text-white stroke-current"
-                    cx="50"
-                    cy="50"
-                    r="48"
-                    strokeWidth="8"
-                    fill="none"
-                    strokeLinecap="round"
-                    style={{ 
-                      strokeDashoffset: 0, 
-                      strokeDasharray: 302, 
-                      transform: "rotate(-90deg)", 
-                      transformOrigin: "center" 
-                    }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">{loadingProgress}%</span>
-                </div>
-              </div>
+              {/* Simple spinning circular loader */}
+              <motion.div 
+                className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full mb-4"
+                animate={{ rotate: 360 }}
+                transition={{ 
+                  duration: 1.2, 
+                  repeat: Infinity, 
+                  ease: "linear"
+                }}
+              />
               <p className="text-xl tracking-widest uppercase">Loading</p>
             </div>
           </motion.div>
