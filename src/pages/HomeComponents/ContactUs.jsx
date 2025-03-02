@@ -133,11 +133,9 @@ export default function ContactUs() {
 
   // List of stylists
   const stylists = [
-    "Sarah Johnson",
-    "Michael Chen",
-    "Olivia Rodriguez",
-    "James Smith",
-    "Any Available Stylist"
+    "Amanda",
+    "Stylist 2",
+    "Stylist 3",
   ];
 
   // Update available services when service category changes
