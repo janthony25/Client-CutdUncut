@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import coloring from '../../images/compressed/coloring.jpg';
 import haircuts from '../../images//compressed/haircuts.jpg';
 import treatment from '../../images//compressed/treatment.jpg';
@@ -7,6 +6,7 @@ import styling2 from '../../images/compressed/styling2.jpg';
 import kid from '../../images/compressed/kid-min.jpg';
 import man from '../../images/compressed/man-min.jpg';
 import { motion, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const CircularCarousel = () => {
   const images = [
@@ -39,6 +39,30 @@ const CircularCarousel = () => {
       src: treatment, 
       title: 'Hair Treatment',
       details: 'Revitalizing treatments for healthy, beautiful hair'
+    }
+  ];
+
+  // Mobile view services - only show these 4 services
+  const mobileViewServices = [
+    { 
+      src: man, 
+      title: `Men's Haircut`,
+      details: 'Classic and modern cuts tailored to your style and preferences'
+    },
+    { 
+      src: styling2, 
+      title: `Women's Haircuts`,
+      details: 'Precision cuts and styles to enhance your natural beauty'
+    },
+    { 
+      src: kid, 
+      title: 'Kids Haircuts',
+      details: 'Gentle and fun haircuts in a kid-friendly environment'
+    },
+    { 
+      src: coloring, 
+      title: 'Hair Coloring',
+      details: 'Professional coloring services including highlights, balayage, and full color transformations'
     }
   ];
 
@@ -183,23 +207,24 @@ const CircularCarousel = () => {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 gap-4 px-4"
         >
-          {images.map((image, index) => (
+          {/* Display only the 4 specific services in mobile view */}
+          {mobileViewServices.map((service, index) => (
             <div key={index} className="w-full aspect-[7/10] overflow-hidden">
               <div className="relative group w-full h-full">
                 <div className="w-full h-full overflow-hidden rounded-xl">
                   <img
-                    src={image.src}
-                    alt={image.title}
+                    src={service.src}
+                    alt={service.title}
                     className="w-full h-full object-cover object-center transform scale-105"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-0 w-full text-center">
-                  <h3 className="text-white text-xl font-semibold px-4">{image.title}</h3>
+                  <h3 className="text-white text-xl font-semibold px-4">{service.title}</h3>
                 </div>
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-xl">
                   <div className="px-6 text-center">
-                    <p className="text-white/90 text-sm">{image.details}</p>
+                    <p className="text-white/90 text-sm">{service.details}</p>
                   </div>
                 </div>
               </div>
@@ -207,7 +232,7 @@ const CircularCarousel = () => {
           ))}
         </motion.div>
         
-        {/* Book Appointment Button for mobile */}
+        {/* View All Button for mobile that links to the Services page */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -220,7 +245,7 @@ const CircularCarousel = () => {
               className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
               transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
             >
-              View All Services
+              VIEW ALL
             </motion.button>
           </Link>
         </motion.div>
@@ -288,7 +313,7 @@ const CircularCarousel = () => {
         </div>
       </motion.div>
       
-      {/* Book Appointment Button for desktop - now with Link */}
+      {/* View All Button for desktop */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
