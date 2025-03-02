@@ -1,16 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, User, Mail, Phone, Scissors, Users } from 'lucide-react';
+import { Calendar, User, Mail, Phone, Scissors, Users, MessageSquare } from 'lucide-react';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
-    serviceType: '',
+    serviceCategory: '',
+    specificService: '',
     stylist: '',
-    date: ''
+    date: '',
+    comments: ''
   });
+
+  // State to store services by category
+  const [availableServices, setAvailableServices] = useState([]);
 
   const ref = useRef(null);
   const isInView = useInView(ref, {
@@ -18,6 +23,7 @@ export default function ContactUs() {
     margin: "-100px"
   });
 
+  // Animation variants
   const titleVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -56,6 +62,98 @@ export default function ContactUs() {
     }
   };
 
+  // Services data structure
+  const serviceCategories = [
+    {
+      title: "Men's Cut",
+      services: [
+        "Restyle",
+        "Style Cut",
+        "Clipper All Over",
+        "Scissors Cut",
+        "Lines and Design",
+        "Beard Trim",
+        "Beard Shave and Lines",
+        "Head Shave"
+      ]
+    },
+    {
+      title: "Women's Cut",
+      services: [
+        "Restyle",
+        "Straight Cut",
+        "Layering"
+      ]
+    },
+    {
+      title: "Kid's Cut",
+      services: [
+        "0 to 5 Years Old",
+        "6 to 10 Years Old",
+        "11 to 13 Years Old"
+      ]
+    },
+    {
+      title: "Coloring",
+      services: [
+        "Global Color",
+        "Root Retouch"
+      ]
+    },
+    {
+      title: "Foils/Highlights",
+      services: [
+        "Full Head Foils",
+        "Ombre",
+        "Balayage",
+        "Toner",
+        "Full Bleach"
+      ]
+    },
+    {
+      title: "Extra",
+      services: [
+        "Shampoo and Conditioning",
+        "Blow Dry / Finger Dry",
+        "Blow Wave",
+        "Temporary Straight",
+        "Temporary Curl",
+        "Hair Treatment"
+      ]
+    },
+    {
+      title: "Brazilian Keratin Straight",
+      services: ["Brazilian Keratin Treatment"]
+    },
+    {
+      title: "Permanent Straight (Rebonding)",
+      services: ["Permanent Straightening"]
+    }
+  ];
+
+  // List of stylists
+  const stylists = [
+    "Amanda",
+    "Stylist 2",
+    "Stylist 3",
+  ];
+
+  // Update available services when service category changes
+  useEffect(() => {
+    if (formData.serviceCategory) {
+      const category = serviceCategories.find(cat => cat.title === formData.serviceCategory);
+      setAvailableServices(category ? category.services : []);
+      
+      // Reset specific service selection when category changes
+      setFormData(prev => ({
+        ...prev,
+        specificService: ''
+      }));
+    } else {
+      setAvailableServices([]);
+    }
+  }, [formData.serviceCategory]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -74,30 +172,13 @@ export default function ContactUs() {
       fullName: '',
       email: '',
       phone: '',
-      serviceType: '',
+      serviceCategory: '',
+      specificService: '',
       stylist: '',
-      date: ''
+      date: '',
+      comments: ''
     });
   };
-
-  // List of services
-  const services = [
-    "Hair Coloring",
-    "Hair Styling",
-    "Men's Haircut",
-    "Women's Haircuts",
-    "Kids Haircuts",
-    "Hair Treatment"
-  ];
-
-  // List of stylists
-  const stylists = [
-    "Sarah Johnson",
-    "Michael Chen",
-    "Olivia Rodriguez",
-    "James Smith",
-    "Any Available Stylist"
-  ];
 
   return (
     <div className="bg-black text-white py-20 w-full" ref={ref}>
@@ -166,20 +247,44 @@ export default function ContactUs() {
             />
           </motion.div>
 
-          {/* Service Type */}
+          {/* Service Category - First Step */}
           <motion.div className="relative" variants={itemVariants}>
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Scissors className="h-5 w-5 text-gray-400" />
             </div>
             <select
-              name="serviceType"
-              value={formData.serviceType}
+              name="serviceCategory"
+              value={formData.serviceCategory}
               onChange={handleChange}
               required
               className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
             >
-              <option value="" disabled>Select Service Type</option>
-              {services.map((service, index) => (
+              <option value="" disabled>Select Service Category</option>
+              {serviceCategories.map((category, index) => (
+                <option key={index} value={category.title}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+          </motion.div>
+
+          {/* Specific Service - Second Step */}
+          <motion.div className="relative" variants={itemVariants}>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Scissors className="h-5 w-5 text-gray-400" />
+            </div>
+            <select
+              name="specificService"
+              value={formData.specificService}
+              onChange={handleChange}
+              required
+              disabled={availableServices.length === 0}
+              className={`w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none ${availableServices.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <option value="" disabled>
+                {availableServices.length === 0 ? 'Select category first' : 'Select specific service'}
+              </option>
+              {availableServices.map((service, index) => (
                 <option key={index} value={service}>
                   {service}
                 </option>
@@ -222,10 +327,24 @@ export default function ContactUs() {
               className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white cursor-pointer"
               style={{
                 colorScheme: 'dark',
-                // Improve calendar icon visibility
                 backgroundImage: 'none'
               }}
               onClick={(e) => e.target.showPicker()}
+            />
+          </motion.div>
+
+          {/* Comments/Additional Info - spans full width */}
+          <motion.div className="relative md:col-span-2" variants={itemVariants}>
+            <div className="absolute top-3 left-3 pointer-events-none">
+              <MessageSquare className="h-5 w-5 text-gray-400" />
+            </div>
+            <textarea
+              name="comments"
+              value={formData.comments}
+              onChange={handleChange}
+              placeholder="Additional comments or special requests"
+              rows="3"
+              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
             />
           </motion.div>
 

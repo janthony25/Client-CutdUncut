@@ -1,13 +1,20 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Scissors } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ServicesPage() {
+
+  const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, {
     once: true,
     margin: "-100px"
   });
+
+  const navigateToContactUs = () => {
+    navigate('/', {state: {scrollToContactUs: true}});
+  }
 
   const titleVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -160,11 +167,12 @@ export default function ServicesPage() {
             Walk in and appointment available!
           </p>
           <button 
-            className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
-            transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
-          >
-            Book Appointment
-          </button>
+    className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+    transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+    onClick={navigateToContactUs}
+  >
+    Book Appointment
+  </button>
         </motion.div>
 
       
