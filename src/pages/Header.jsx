@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Menu, OctagonPauseIcon, X } from 'lucide-react'
-import { Link, useLocation} from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react';
 
 const headerVariants = {
@@ -22,6 +22,7 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,6 +39,23 @@ export default function Header() {
             top: 0,
             behavior: 'smooth'
         });
+    };
+
+    const navigateToContactUs = () => {
+        if (location.pathname === '/') {
+            // Already on home page, just scroll to contact section
+            const contactElement = document.getElementById("contact-section");
+            if (contactElement) {
+                contactElement.scrollIntoView({ behavior: "smooth" });
+            }
+        } else {
+            // Navigate to home page with state to scroll to contact section
+            navigate('/', {state: {scrollToContactUs: true}});
+        }
+        // Close mobile menu if open
+        if (isOpen) {
+            setIsOpen(false);
+        }
     };
 
     const menuItems = [
@@ -104,7 +122,10 @@ export default function Header() {
                                     </Link>
                                 )
                             ))}
-                            <button className="px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200">
+                            <button 
+                                className="px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200"
+                                onClick={navigateToContactUs}
+                            >
                                 Book now
                             </button>
                         </div>
@@ -152,7 +173,10 @@ export default function Header() {
                                     </Link>
                                 )
                             ))}
-                            <button className="w-full mt-4 px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200">
+                            <button 
+                                className="w-full mt-4 px-4 py-2 bg-white text-black rounded-md hover:bg-blue-200 transition-colors duration-200"
+                                onClick={navigateToContactUs}
+                            >
                                 Book now
                             </button>
                         </div>
