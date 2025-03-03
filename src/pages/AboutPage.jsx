@@ -2,17 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Users, Award, Clock, Scissors, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import fade1 from "../images/Works/fade1.jpg"
+import hair2 from "../images/Works/hair2.jpg"
+import hair from "../images/Works/hair3.jpg"
+import hair3 from "../images/Works/hair_before_after_1.jpg"
+import hair4 from "../images/Works/hair_before_after_2.jpg"
+import hair5 from "../images/Works/hair_before_after_3.jpg"
+import kid1 from "../images/Works/kid1.jpg"
+import hair6 from "../images/Works/hair_before_after_4.jpg"
+import hair7 from "../images/Works/hair_before_after_5.jpg"
 
 // Define images outside the component - now with 9 square images
-const workImage1 = "/api/placeholder/300/300";
-const workImage2 = "/api/placeholder/300/300";
-const workImage3 = "/api/placeholder/300/300";
-const workImage4 = "/api/placeholder/300/300";
-const workImage5 = "/api/placeholder/300/300";
-const workImage6 = "/api/placeholder/300/300";
-const workImage7 = "/api/placeholder/300/300";
-const workImage8 = "/api/placeholder/300/300";
-const workImage9 = "/api/placeholder/300/300";
+const workImage1 = fade1;
+const workImage2 = kid1;
+const workImage3 = hair2;
+const workImage4 = hair;
+const workImage5 = hair3;
+const workImage6 = hair4;
+const workImage7 = hair5;
+const workImage8 = hair6;
+const workImage9 = hair7;
 
 // Define animation variants outside the component
 const titleVariants = {
