@@ -76,53 +76,17 @@ export default function AboutPage() {
     margin: "-100px",
   });
 
-  // Define all content data
+  // Define all content data - kept for reference but without titles and descriptions
   const workItems = [
-    {
-      image: workImage1,
-      title: "Modern Fade",
-      description: "Clean lines and perfect graduation",
-    },
-    {
-      image: workImage2,
-      title: "Balayage",
-      description: "Subtle color transitions and depth",
-    },
-    {
-      image: workImage3,
-      title: "Textured Bob",
-      description: "Dynamic movement and easy styling",
-    },
-    {
-      image: workImage4,
-      title: "Classic Pompadour",
-      description: "Timeless style with modern execution",
-    },
-    {
-      image: workImage5,
-      title: "Vibrant Color",
-      description: "Bold statement colors that last",
-    },
-    {
-      image: workImage6,
-      title: "Beach Waves",
-      description: "Effortless texture for any occasion",
-    },
-    {
-      image: workImage7,
-      title: "Men's Precision Cut",
-      description: "Sharp, tailored styles for modern men",
-    },
-    {
-      image: workImage8,
-      title: "Natural Curls",
-      description: "Enhancing natural curl patterns",
-    },
-    {
-      image: workImage9,
-      title: "Platinum Blonde",
-      description: "Bold, bright transformations",
-    },
+    { image: workImage1 },
+    { image: workImage2 },
+    { image: workImage3 },
+    { image: workImage4 },
+    { image: workImage5 },
+    { image: workImage6 },
+    { image: workImage7 },
+    { image: workImage8 },
+    { image: workImage9 }
   ];
 
   const features = [
@@ -301,7 +265,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Works Section - Updated with 9 square photos */}
+      {/* Our Works Section - Updated with 9 square photos without titles and descriptions */}
       <section className="py-20 bg-gray-950" ref={worksRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -331,19 +295,11 @@ export default function AboutPage() {
                 <div className="aspect-square overflow-hidden">
                   <img
                     src={work.image}
-                    alt={work.title}
+                    alt={`Gallery image ${index + 1}`}
                     className="w-full h-full object-cover transform scale-105 group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-base sm:text-lg font-medium text-white mb-1">
-                    {work.title}
-                  </h3>
-                  <p className="text-gray-300 text-xs sm:text-sm">
-                    {work.description}
-                  </p>
-                </div>
+                {/* Removed the title and description overlay */}
               </motion.div>
             ))}
           </motion.div>
