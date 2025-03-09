@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import coloring from '../../images/compressed/coloring.jpg';
-import haircuts from '../../images//compressed/haircuts.jpg';
-import treatment from '../../images//compressed/treatment.jpg';
-import styling2 from '../../images/compressed/styling2.jpg';
-import kid from '../../images/compressed/kid-min.jpg';
-import man from '../../images/compressed/man-min.jpg';
+import coloring from '../../images/purple_hair.AVIF';
+import haircuts from '../../images/styling.AVIF';
+import treatment from '../../images/treatment.AVIF';
+import styling2 from '../../images/haircut.AVIF';
+import kid from '../../images/kid.AVIF';
+import man from '../../images/fade_new.AVIF';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
