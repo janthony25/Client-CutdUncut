@@ -2,26 +2,36 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Users, Award, Clock, Scissors, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import fade1 from "../images/Works/fade1.jpg"
-import hair2 from "../images/Works/hair2.jpg"
-import hair from "../images/Works/hair3.jpg"
-import hair3 from "../images/Works/hair_before_after_1.jpg"
-import hair4 from "../images/Works/hair_before_after_2.jpg"
-import hair5 from "../images/Works/hair_before_after_3.jpg"
-import kid1 from "../images/Works/kid1.jpg"
-import hair6 from "../images/Works/hair_before_after_4.jpg"
-import hair7 from "../images/Works/hair_before_after_5.jpg"
+// import fade1 from "../images/Works/fade1.jpg"
+// import hair2 from "../images/Works/hair2.jpg"
+// import hair from "../images/Works/hair3.jpg"
+// import hair3 from "../images/Works/hair_before_after_1.jpg"
+// import hair4 from "../images/Works/hair_before_after_2.jpg"
+// import hair5 from "../images/Works/hair_before_after_3.jpg"
+// import kid1 from "../images/Works/kid1.jpg"
+// import hair6 from "../images/Works/hair_before_after_4.jpg"
+// import hair7 from "../images/Works/hair_before_after_5.jpg"
+// pro images
+import pro1 from "../images/Works/pro/pro1.AVIF"
+import pro2 from "../images/Works/pro/pro2.AVIF"
+import pro3 from "../images/Works/pro/pro3.AVIF"
+import pro4 from "../images/Works/pro/pro4.AVIF"
+import pro5 from "../images/Works/pro/pro5.AVIF"
+import pro6 from "../images/Works/pro/pro6.AVIF"
+import pro7 from "../images/Works/pro/pro7.AVIF"
+import pro8 from "../images/Works/pro/pro8.AVIF"
+import pro9 from "../images/Works/pro/pro9.AVIF"
 
 // Define images outside the component - now with 9 square images
-const workImage1 = fade1;
-const workImage2 = kid1;
-const workImage3 = hair2;
-const workImage4 = hair;
-const workImage5 = hair3;
-const workImage6 = hair4;
-const workImage7 = hair5;
-const workImage8 = hair6;
-const workImage9 = hair7;
+const workImage1 = pro1;
+const workImage2 = pro2;
+const workImage3 = pro3;
+const workImage4 = pro4;
+const workImage5 = pro5;
+const workImage6 = pro6;
+const workImage7 = pro7;
+const workImage8 = pro8;
+const workImage9 = pro9;
 
 // Define animation variants outside the component
 const titleVariants = {
