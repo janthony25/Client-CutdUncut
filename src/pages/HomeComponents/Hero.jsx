@@ -99,7 +99,7 @@ export default function Hero() {
                 alt="colored-haired-girl with salon backdrop" 
                 className="w-auto h-screen lg:w-full object-cover" 
                 loading="eager" 
-                fetchpriority="high"
+                fetchPriority="high"
               />
               {/* Gradient overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>

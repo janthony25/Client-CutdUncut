@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Calendar, User, Mail, Phone, Scissors, Users, MessageSquare } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -14,9 +15,16 @@ export default function ContactUs() {
     comments: ''
   });
 
+  const [formStatus, setFormStatus] = useState({
+    submitting: false,
+    submitted: false,
+    error: null
+  });
+
   // State to store services by category
   const [availableServices, setAvailableServices] = useState([]);
 
+  const formRef = useRef(null);
   const ref = useRef(null);
   const isInView = useInView(ref, {
     once: true,
@@ -164,20 +172,69 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add your form submission logic here
     
-    // Reset form after submission
-    setFormData({
-      fullName: '',
-      email: '',
-      phone: '',
-      serviceCategory: '',
-      specificService: '',
-      stylist: '',
-      date: '',
-      comments: ''
+    // Set submitting state
+    setFormStatus({
+      submitting: true,
+      submitted: false,
+      error: null
     });
+
+    // IMPORTANT: Replace these with your actual EmailJS service ID, template ID, and public key
+    const serviceId = 'service_6xi9m9q';
+    const templateId = 'template_fjfo66g';
+    const publicKey = '4YQFYE8jFZ7Ptrays';
+
+    // Prepare the template parameters
+    const templateParams = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      serviceCategory: formData.serviceCategory,
+      specificService: formData.specificService,
+      stylist: formData.stylist,
+      date: formData.date,
+      comments: formData.comments
+    };
+
+    // Send the email using EmailJS
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log('Email sent successfully:', response);
+        setFormStatus({
+          submitting: false,
+          submitted: true,
+          error: null
+        });
+
+        // Reset form after successful submission
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          serviceCategory: '',
+          specificService: '',
+          stylist: '',
+          date: '',
+          comments: ''
+        });
+
+        // Reset form submission status after a delay
+        setTimeout(() => {
+          setFormStatus(prev => ({
+            ...prev,
+            submitted: false
+          }));
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error('Email sending error:', error);
+        setFormStatus({
+          submitting: false,
+          submitted: false,
+          error: 'There was an error sending your appointment request. Please try again or contact us directly.'
+        });
+      });
   };
 
   return (
@@ -192,173 +249,196 @@ export default function ContactUs() {
           Book Your Appointment
         </motion.h2>
 
-        <motion.form 
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {/* Full Name */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              placeholder="Full Name"
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
-            />
+        {formStatus.submitted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-green-900/40 border border-green-800 rounded-md p-6 text-center"
+          >
+            <h3 className="text-xl font-medium text-white mb-2">Appointment Request Sent!</h3>
+            <p className="text-green-200">
+              Thank you for booking with us. We'll confirm your appointment within 24 hours.
+            </p>
           </motion.div>
+        ) : (
+          <motion.form 
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+          >
+            {/* Display error message if there is one */}
+            {formStatus.error && (
+              <div className="md:col-span-2 bg-red-900/40 border border-red-800 rounded-md p-4">
+                <p className="text-red-200">{formStatus.error}</p>
+              </div>
+            )}
 
-          {/* Email */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email Address"
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
-            />
-          </motion.div>
+            {/* Full Name */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Full Name"
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
+              />
+            </motion.div>
 
-          {/* Phone */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Phone className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Contact Number"
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
-            />
-          </motion.div>
+            {/* Email */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email Address"
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
+              />
+            </motion.div>
 
-          {/* Service Category - First Step */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Scissors className="h-5 w-5 text-gray-400" />
-            </div>
-            <select
-              name="serviceCategory"
-              value={formData.serviceCategory}
-              onChange={handleChange}
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
-            >
-              <option value="" disabled>Select Service Category</option>
-              {serviceCategories.map((category, index) => (
-                <option key={index} value={category.title}>
-                  {category.title}
+            {/* Phone */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Phone className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Contact Number"
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
+              />
+            </motion.div>
+
+            {/* Service Category - First Step */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Scissors className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                name="serviceCategory"
+                value={formData.serviceCategory}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
+              >
+                <option value="" disabled>Select Service Category</option>
+                {serviceCategories.map((category, index) => (
+                  <option key={index} value={category.title}>
+                    {category.title}
+                  </option>
+                ))}
+              </select>
+            </motion.div>
+
+            {/* Specific Service - Second Step */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Scissors className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                name="specificService"
+                value={formData.specificService}
+                onChange={handleChange}
+                required
+                disabled={availableServices.length === 0}
+                className={`w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none ${availableServices.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <option value="" disabled>
+                  {availableServices.length === 0 ? 'Select category first' : 'Select specific service'}
                 </option>
-              ))}
-            </select>
-          </motion.div>
+                {availableServices.map((service, index) => (
+                  <option key={index} value={service}>
+                    {service}
+                  </option>
+                ))}
+              </select>
+            </motion.div>
 
-          {/* Specific Service - Second Step */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Scissors className="h-5 w-5 text-gray-400" />
-            </div>
-            <select
-              name="specificService"
-              value={formData.specificService}
-              onChange={handleChange}
-              required
-              disabled={availableServices.length === 0}
-              className={`w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none ${availableServices.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              <option value="" disabled>
-                {availableServices.length === 0 ? 'Select category first' : 'Select specific service'}
-              </option>
-              {availableServices.map((service, index) => (
-                <option key={index} value={service}>
-                  {service}
-                </option>
-              ))}
-            </select>
-          </motion.div>
+            {/* Stylist */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Users className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                name="stylist"
+                value={formData.stylist}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
+              >
+                <option value="" disabled>Select Stylist</option>
+                {stylists.map((stylist, index) => (
+                  <option key={index} value={stylist}>
+                    {stylist}
+                  </option>
+                ))}
+              </select>
+            </motion.div>
 
-          {/* Stylist */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Users className="h-5 w-5 text-gray-400" />
-            </div>
-            <select
-              name="stylist"
-              value={formData.stylist}
-              onChange={handleChange}
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
-            >
-              <option value="" disabled>Select Stylist</option>
-              {stylists.map((stylist, index) => (
-                <option key={index} value={stylist}>
-                  {stylist}
-                </option>
-              ))}
-            </select>
-          </motion.div>
+            {/* Date */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Calendar className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white cursor-pointer"
+                style={{
+                  colorScheme: 'dark',
+                  backgroundImage: 'none'
+                }}
+                onClick={(e) => e.target.showPicker()}
+              />
+            </motion.div>
 
-          {/* Date */}
-          <motion.div className="relative" variants={itemVariants}>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Calendar className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white cursor-pointer"
-              style={{
-                colorScheme: 'dark',
-                backgroundImage: 'none'
-              }}
-              onClick={(e) => e.target.showPicker()}
-            />
-          </motion.div>
+            {/* Comments/Additional Info - spans full width */}
+            <motion.div className="relative md:col-span-2" variants={itemVariants}>
+              <div className="absolute top-3 left-3 pointer-events-none">
+                <MessageSquare className="h-5 w-5 text-gray-400" />
+              </div>
+              <textarea
+                name="comments"
+                value={formData.comments}
+                onChange={handleChange}
+                placeholder="Additional comments or special requests"
+                rows="3"
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
+              />
+            </motion.div>
 
-          {/* Comments/Additional Info - spans full width */}
-          <motion.div className="relative md:col-span-2" variants={itemVariants}>
-            <div className="absolute top-3 left-3 pointer-events-none">
-              <MessageSquare className="h-5 w-5 text-gray-400" />
-            </div>
-            <textarea
-              name="comments"
-              value={formData.comments}
-              onChange={handleChange}
-              placeholder="Additional comments or special requests"
-              rows="3"
-              className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white"
-            />
-          </motion.div>
-
-          {/* Submit Button - spans full width */}
-          <motion.div className="md:col-span-2 mt-4" variants={buttonVariant}>
-            <button
-              type="submit"
-              className="w-full px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
-              transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
-            >
-              Book Appointment
-            </button>
-          </motion.div>
-        </motion.form>
+            {/* Submit Button - spans full width */}
+            <motion.div className="md:col-span-2 mt-4" variants={buttonVariant}>
+              <button
+                type="submit"
+                disabled={formStatus.submitting}
+                className={`w-full px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
+                transition-all duration-300 text-lg tracking-wider uppercase shadow-lg
+                ${formStatus.submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
+                {formStatus.submitting ? 'Sending...' : 'Book Appointment'}
+              </button>
+            </motion.div>
+          </motion.form>
+        )}
         
         <motion.p 
           className="text-center text-gray-400 mt-6 text-sm"
