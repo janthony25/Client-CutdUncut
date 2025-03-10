@@ -29,21 +29,13 @@ export default function Footer() {
               Premium hair salon offering personalized styling services to help you unlock your best look.
             </p>
             <div className="flex space-x-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+              <a href="https://www.instagram.com/cutduncut/" target="_blank" rel="noopener noreferrer" 
                 className="text-gray-400 hover:text-white transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
+              <a href="https://www.facebook.com/CUTDUNCUTHAIRPAGE/" target="_blank" rel="noopener noreferrer" 
                 className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-white transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-white transition-colors">
-                <Youtube size={20} />
               </a>
             </div>
           </div>
@@ -55,20 +47,20 @@ export default function Footer() {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">
-                  123 Styling Avenue<br />
-                  New York, NY 10001
+                  33F Kirby Street Glendende<br />
+                  Auckland
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
                 <a href="tel:+12125551234" className="text-gray-300 hover:text-white transition-colors">
-                  (212) 555-1234
+                  (+64) 22 060 6003
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
                 <a href="mailto:info@cutduncut.com" className="text-gray-300 hover:text-white transition-colors">
-                  info@cutduncut.com
+                  info@gupit.co.nz
                 </a>
               </li>
             </ul>
@@ -82,21 +74,7 @@ export default function Footer() {
                 <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300">Monday - Friday</p>
-                  <p className="text-gray-400">9:00 AM - 8:00 PM</p>
-                </div>
-              </li>
-              <li className="flex items-start mt-2">
-                <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-300">Saturday</p>
-                  <p className="text-gray-400">9:00 AM - 7:00 PM</p>
-                </div>
-              </li>
-              <li className="flex items-start mt-2">
-                <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-300">Sunday</p>
-                  <p className="text-gray-400">10:00 AM - 5:00 PM</p>
+                  <p className="text-gray-400">8:00 AM - 5:00 PM</p>
                 </div>
               </li>
             </ul>
@@ -121,26 +99,7 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  Book Appointment
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  Gallery
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
+             
             </ul>
           </div>
         </div>
@@ -152,7 +111,7 @@ export default function Footer() {
           <p className="text-gray-400 text-sm text-center md:text-left">
             &copy; {currentYear} Cut d Uncut. All rights reserved.
           </p>
-          <div className="mt-4 md:mt-0">
+          {/* <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -170,7 +129,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
