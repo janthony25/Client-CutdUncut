@@ -12,15 +12,15 @@ import { useNavigate } from "react-router-dom";
 // import hair6 from "../images/Works/hair_before_after_4.jpg"
 // import hair7 from "../images/Works/hair_before_after_5.jpg"
 // pro images
-import pro1 from "../images/Works/pro/pro1.AVIF"
+import pro1 from "../images/Works/pro/pro1.avif"
 import pro2 from "../images/Works/pro/pro2.jpg"
-import pro3 from "../images/Works/pro/pro3.AVIF"
+import pro3 from "../images/Works/pro/pro3.avif"
 import pro4 from "../images/Works/pro/pro4.jpg"
 import pro5 from "../images/Works/pro/pro5.jpg"
 import pro6 from "../images/Works/pro/pro6.jpg"
-import pro7 from "../images/Works/pro/pro7.AVIF"
-import pro8 from "../images/Works/pro/pro8.AVIF"
-import pro9 from "../images/Works/pro/pro9.AVIF"
+import pro7 from "../images/Works/pro/pro7.avif"
+import pro8 from "../images/Works/pro/pro8.avif"
+import pro9 from "../images/Works/pro/pro9.avif"
 
 // Define images outside the component - now with 9 square images
 const workImage1 = pro1;
