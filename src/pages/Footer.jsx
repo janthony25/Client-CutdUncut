@@ -43,7 +43,8 @@ export default function Footer() {
           {/* Column 2: Contact Info */}
           <div>
             <h3 className="text-xl font-medium mb-4">Contact Us</h3>
-            <ul className="space-y-3">
+            
+            <ul className="mb-6">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">
@@ -55,6 +56,39 @@ export default function Footer() {
                 <Phone className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
                 <a href="tel:+12125551234" className="text-gray-300 hover:text-white transition-colors">
                   (+64) 22 060 6003
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Phone className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
+                <a href="tel:+12125551234" className="text-gray-300 hover:text-white transition-colors">
+                  098273200
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Mail className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
+                <a href="mailto:info@gupit.co.nz" className="text-gray-300 hover:text-white transition-colors">
+                  info@gupit.co.nz
+                </a>
+              </li>
+            </ul>
+            <ul className="">
+              <li className="flex items-start">
+                <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-300">
+                  2/120 Bolton St. New Lynn<br />
+                  Auckland
+                </span>
+              </li>
+              <li className="flex items-center">
+                <Phone className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
+                <a href="tel:+12125551234" className="text-gray-300 hover:text-white transition-colors">
+                  (+64) 22 060 6003
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Phone className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
+                <a href="tel:+12125551234" className="text-gray-300 hover:text-white transition-colors">
+                  098273200
                 </a>
               </li>
               <li className="flex items-center">
