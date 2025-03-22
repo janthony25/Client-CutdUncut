@@ -47,7 +47,7 @@ export default function Footer() {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">
-                  33F Kirby Street Glendende<br />
+                  33F Kirby Street Glendene<br />
                   Auckland
                 </span>
               </li>
@@ -59,7 +59,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
-                <a href="mailto:info@cutduncut.com" className="text-gray-300 hover:text-white transition-colors">
+                <a href="mailto:info@gupit.co.nz" className="text-gray-300 hover:text-white transition-colors">
                   info@gupit.co.nz
                 </a>
               </li>
@@ -69,11 +69,29 @@ export default function Footer() {
           {/* Column 3: Opening Hours */}
           <div>
             <h3 className="text-xl font-medium mb-4">Opening Hours</h3>
+            <h6>Glendene Branch</h6>
             <ul className="space-y-2">
               <li className="flex items-start">
                 <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-300">Monday - Friday</p>
+                  <p className="text-gray-300">Monday - Sunday</p>
+                  <p className="text-gray-400">9:00 AM - 9:00 PM</p>
+                </div>
+              </li>
+            </ul>
+            <h6 className='mt-4'>New Lynn Branch</h6>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-gray-300">Tuesday - Saturday</p>
+                  <p className="text-gray-400">8:00 AM - 7:00 PM</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <Clock className="h-5 w-5 text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-gray-300">Sunday</p>
                   <p className="text-gray-400">8:00 AM - 5:00 PM</p>
                 </div>
               </li>
