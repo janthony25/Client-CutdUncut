@@ -210,7 +210,7 @@ export default function AboutPage() {
   return (
     <div className="bg-black text-white pt-20">
       {/* About Us / Our Story Section */}
-      <section className="py-20" ref={storyRef}>
+      {/* <section className="py-20" ref={storyRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -273,7 +273,7 @@ export default function AboutPage() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Our Works Section - Updated with 9 square photos without titles and descriptions */}
       <section className="py-20 bg-gray-950" ref={worksRef}>
