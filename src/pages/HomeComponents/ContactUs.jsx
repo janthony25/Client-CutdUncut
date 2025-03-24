@@ -87,6 +87,15 @@ export default function ContactUs() {
       ]
     },
     {
+      title: "Toupee Services",
+      services: [
+        "Toupee Installation",
+        "Toupee Readjustment",
+        "Refresh and Maintenance",
+        "Side Maintenance"
+      ]
+    },
+    {
       title: "Women's Cut",
       services: [
         "Restyle",
