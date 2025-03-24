@@ -64,6 +64,15 @@ export default function ServicesPage() {
       ]
     },
     {
+      title: "Toupee Services",
+      items: [
+        "Toupee Installation",
+        "Toupee Readjustment",
+        "Refresh and Maintenance",
+        "Side Maintenance"
+      ]
+    },
+    {
       title: "Coloring",
       items: [
         "Global Color",
