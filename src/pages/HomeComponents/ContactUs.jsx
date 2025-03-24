@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, User, Mail, Phone, Scissors, Users, MessageSquare } from 'lucide-react';
+import { Calendar, User, Mail, Phone, Scissors, Users, MessageSquare, Clock } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 export default function ContactUs() {
@@ -12,6 +12,7 @@ export default function ContactUs() {
     specificService: '',
     stylist: '',
     date: '',
+    time: '',
     comments: ''
   });
 
@@ -141,9 +142,7 @@ export default function ContactUs() {
 
   // List of stylists
   const stylists = [
-    "Amanda",
-    "Stylist 2",
-    "Stylist 3",
+    "Any"
   ];
 
   // Update available services when service category changes
@@ -194,6 +193,7 @@ export default function ContactUs() {
       specificService: formData.specificService,
       stylist: formData.stylist,
       date: formData.date,
+      time: formData.time,
       comments: formData.comments
     };
 
@@ -216,6 +216,7 @@ export default function ContactUs() {
           specificService: '',
           stylist: '',
           date: '',
+          time: '',
           comments: ''
         });
 
@@ -408,6 +409,40 @@ export default function ContactUs() {
                 }}
                 onClick={(e) => e.target.showPicker()}
               />
+            </motion.div>
+            
+            {/* Time */}
+            <motion.div className="relative" variants={itemVariants}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Clock className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-3 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors text-white appearance-none"
+              >
+                <option value="" disabled>Select Time</option>
+                {/* Generate time options from 8:00 AM to 9:00 PM in 15-minute intervals */}
+                {Array.from({ length: 13 }).map((_, hourIndex) => {
+                  const hour = hourIndex + 8; // Starting from 8 AM
+                  const period = hour < 12 ? 'AM' : 'PM';
+                  const displayHour = hour > 12 ? hour - 12 : hour;
+                  const paddedHour = displayHour.toString().padStart(2, '0');
+                  
+                  return [0, 15, 30, 45].map((minutes) => {
+                    const paddedMinutes = minutes.toString().padStart(2, '0');
+                    const timeValue = `${paddedHour}:${paddedMinutes} ${period}`;
+                    
+                    return (
+                      <option key={timeValue} value={timeValue}>
+                        {timeValue}
+                      </option>
+                    );
+                  });
+                })}
+              </select>
             </motion.div>
 
             {/* Comments/Additional Info - spans full width */}
