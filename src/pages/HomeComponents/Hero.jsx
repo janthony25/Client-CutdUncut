@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import bgPhoto from "../../images/webp/hero-bg.webp";
 import FadeIn, { variants } from '../../animations/FadeIn';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
+
+  const navigate = useNavigate();
   
   // Preload image with complete loading guarantee
   useEffect(() => {
@@ -134,15 +137,22 @@ export default function Hero() {
                 <button 
                   className="px-8 py-3 bg-white text-black border-2 border-white hover:bg-black hover:text-white
                   transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+                  onClick={() => {
+                    const contactElement = document.getElementById("contact-section");
+                    if (contactElement) {
+                      contactElement.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
                 >
                   Book Appointment
                 </button>
                 <button 
-                  className="px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
-                  transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
-                >
-                  Learn More
-                </button>
+  className="px-8 py-3 bg-transparent text-white border-2 border-white hover:bg-black hover:text-white
+  transition-all duration-300 text-lg tracking-wider uppercase shadow-lg"
+  onClick={() => navigate('/about')}
+>
+  Learn More
+</button>
               </motion.div>
             </div>
           </FadeIn>
